@@ -23,6 +23,16 @@ document.addEventListener('DOMContentLoaded', () => {
     menuOpenBtn.addEventListener('click', openMenu);
     menuCloseBtn.addEventListener('click', closeMenu);
 
+    // Header cambia colore on-scroll (sfondo nero)
+    const header = document.querySelector('.main-header');
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 50) {
+            header.classList.add('scrolled');
+        } else {
+            header.classList.remove('scrolled');
+        }
+    });
+
     // Optional: Close menu when clicking outside of links (on the overlay itself)
     mobileMenu.addEventListener('click', (e) => {
         if (e.target === mobileMenu) {
