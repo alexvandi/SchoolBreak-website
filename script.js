@@ -1,40 +1,39 @@
 /* =========================================
-   INTRO ANIMATION CONTROLLER (solo Home)
+   INTRO OVERLAY CONTROLLER (solo Home)
    ========================================= */
 (function () {
-    const isIntro = document.body.classList.contains('intro-animating');
-    if (!isIntro) return;
+    const overlay = document.getElementById('intro-overlay');
+    if (!overlay) return; // Non fare nulla se l'overlay non è presente (altre pagine)
 
-    const introWrapper = document.getElementById('intro-logo-wrapper');
-    const w1 = document.getElementById('welcome-word1');
-    const w2 = document.getElementById('welcome-word2');
+    const w1 = document.getElementById('intro-w1');
+    const w2 = document.getElementById('intro-w2');
+    const logo = document.getElementById('intro-logo');
 
-    // Step 1: Mostra "WELCOME"
+    // Step 1: Mostra "WELCOME" al centro
     setTimeout(() => {
         if (w1) w1.classList.add('show');
-    }, 200);
+    }, 300);
 
     // Step 2: Mostra "TO"
     setTimeout(() => {
         if (w2) w2.classList.add('show');
-    }, 800);
+    }, 900);
 
     // Step 3: Mostra il Logo che sale dal basso
     setTimeout(() => {
-        if (introWrapper) introWrapper.classList.add('show');
-    }, 1400);
+        if (logo) logo.classList.add('show');
+    }, 1500);
 
-    // Step 4: Rimuovi lo stato "intro-animating" per far scorrere tutto al suo posto
+    // Step 4: L'intero overlay scorre verso l'alto rivelando la Home sotto
     setTimeout(() => {
-        const txtContainer = document.querySelector('.welcome-text-container');
-        if (txtContainer) txtContainer.style.opacity = '0'; // dissolve "Welcome To" text
-
-        document.body.classList.remove('intro-animating');
+        overlay.classList.add('slide-up');
         document.body.classList.remove('no-scroll');
-        if (introWrapper) {
-            introWrapper.classList.remove('show');
-        }
-    }, 3200);
+    }, 3000);
+
+    // Step 5: Rimuovi l'overlay dal DOM dopo l'animazione
+    setTimeout(() => {
+        overlay.remove();
+    }, 4200);
 })();
 
 document.addEventListener('DOMContentLoaded', () => {

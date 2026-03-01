@@ -25,7 +25,7 @@
     <link rel="stylesheet" href="style.css">
 </head>
 
-<body class="no-scroll intro-animating">
+<body class="no-scroll">
 
     <!-- Sfondo principale -->
     <div class="bg-image"></div>
@@ -48,16 +48,19 @@
     <!-- H1 Nascosto per i motori di ricerca (SEO) in favore del logo grafico e testo visivo -->
     <h1 class="visually-hidden">Schoolbreak: L'evento ufficiale delle scuole di Rimini</h1>
 
+    <!-- INTRO OVERLAY (fullscreen, si sovrappone a tutto) -->
+    <div id="intro-overlay" class="intro-overlay">
+        <div class="intro-center">
+            <span id="intro-w1" class="intro-word">WELCOME</span>
+            <span id="intro-w2" class="intro-word">TO</span>
+            <img id="intro-logo" src="Schoolbreak logo.PNG" alt="Schoolbreak" class="intro-logo">
+        </div>
+    </div>
+
     <!-- Contenuto principale della Home -->
     <main class="hero-section">
         <div class="hero-content">
-            <div id="intro-logo-wrapper">
-                <div class="welcome-text-container">
-                    <span id="welcome-word1" class="welcome-word">WELCOME</span>
-                    <span id="welcome-word2" class="welcome-word">TO</span>
-                </div>
-                <img src="Schoolbreak logo.PNG" alt="Logo ottagonale Schoolbreak" class="hero-logo-img tilt-element">
-            </div>
+            <img src="Schoolbreak logo.PNG" alt="Logo ottagonale Schoolbreak" class="hero-logo-img tilt-element">
             <p class="tagline">L'evento ufficiale delle scuole di Rimini</p>
         </div>
 
@@ -69,32 +72,47 @@
         </div>
     </main>
 
-    <!-- NEW DISCOVER SECTION (Space Riccione Style) -->
+    <!-- NEW DISCOVER SECTION -->
     <section class="content-section discover-section reveal">
         <div class="section-container">
             <h2 class="discover-heading">QUESTO È SCHOOLBREAK</h2>
             <div class="discover-grid">
                 <a href="eventi.html" class="discover-card tilt-element">
-                    <div class="discover-card-bg card-1"></div>
+                    <div class="discover-card-bg card-1" style="background-image:url('card-eventi.jpeg')"></div>
                     <div class="discover-card-content">
                         <h3>EVENTI</h3>
                         <p>Dal mito alla realtà: scopri i nostri format esclusivi.</p>
                     </div>
                 </a>
                 <a href="membership.html" class="discover-card tilt-element">
-                    <div class="discover-card-bg card-2"></div>
+                    <div class="discover-card-bg card-2" style="background-image:url('card-sbmember.jpeg')"></div>
                     <div class="discover-card-content">
-                        <h3>VIP AREA</h3>
+                        <h3>SB MEMBER</h3>
                         <p>Scopri il lato più esclusivo: vivi il party da protagonista.</p>
                     </div>
                 </a>
                 <a href="press.html" class="discover-card tilt-element">
-                    <div class="discover-card-bg card-3"></div>
+                    <div class="discover-card-bg card-3" style="background-image:url('card-press.jpeg')"></div>
                     <div class="discover-card-content">
                         <h3>PRESS</h3>
                         <p>Le testate giornalistiche parlano del nostro progetto studentesco.</p>
                     </div>
                 </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- PHOTO CAROUSEL SECTION (peterpanclub.net style) -->
+    <section class="content-section gallery-section reveal">
+        <div class="section-container">
+            <h2 class="discover-heading">GALLERY</h2>
+            <div class="gallery-carousel">
+                <div class="gallery-slide"><img src="carousel-1.jpeg" alt="Schoolbreak Gallery 1" loading="lazy"></div>
+                <div class="gallery-slide"><img src="carousel-2.jpeg" alt="Schoolbreak Gallery 2" loading="lazy"></div>
+                <div class="gallery-slide"><img src="carousel-3.jpeg" alt="Schoolbreak Gallery 3" loading="lazy"></div>
+                <div class="gallery-slide"><img src="carousel-4.jpeg" alt="Schoolbreak Gallery 4" loading="lazy"></div>
+                <div class="gallery-slide"><img src="carousel-5.jpeg" alt="Schoolbreak Gallery 5" loading="lazy"></div>
+                <div class="gallery-slide"><img src="carousel-6.jpeg" alt="Schoolbreak Gallery 6" loading="lazy"></div>
             </div>
         </div>
     </section>
