@@ -54,7 +54,35 @@ body.no-scroll {
     overflow: hidden;
 }
 
-/* L'intro usa uno sfondo scuro solido. Quando ha finito, scorre verso l'alto 
+/* Nascondiamo tutto il contenuto della hero fintanto che c'è l'intro,
+   ma li posizioniamo anche scorressi in basso. */
+body.intro-active .hero-content,
+body.intro-active .cta-container,
+body.intro-active .main-header,
+body.intro-active .discover-section,
+body.intro-active .gallery-section,
+body.intro-active .main-footer {
+    opacity: 0 !important;
+    pointer-events: none;
+    transform: translateY(100px);
+    /* Slidati in basso */
+    transition: none;
+    /* Disabilitata fino alla rivelazione */
+}
+
+/* Transizione per quando ritornano visibili */
+.hero-content,
+.cta-container,
+.main-header,
+.discover-section,
+.gallery-section,
+.main-footer {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) 0.2s, transform 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) 0.2s;
+}
+
+/* L'intro usa uno sfondo scuro solido. Quando ha finito, scorre verso l'alto
    rivelando la Home normale sottostante. */
 .intro-overlay {
     position: fixed;
@@ -62,13 +90,14 @@ body.no-scroll {
     left: 0;
     width: 100%;
     height: 100vh;
-    background: var(--bg-dark);
-    /* Sfondo pieno */
+    background: transparent;
+    /* Solo scritte sul vero sfondo */
     z-index: 9999;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: transform 1.2s cubic-bezier(0.76, 0, 0.24, 1);
+    transition: opacity 1s ease;
+    /* Fade out morbido, basta slide-up */
 }
 
 .intro-overlay.slide-up {
@@ -1172,18 +1201,7 @@ html {
     z-index: 2;
 }
 
-/* Style placeholders instead of real images */
-.card-1 {
-    background: radial-gradient(circle at top right, #330000, #111);
-}
-
-.card-2 {
-    background: radial-gradient(circle at top right, #001133, #111);
-}
-
-.card-3 {
-    background: radial-gradient(circle at top right, #333333, #111);
-}
+/* Rimosse classi sostitutive .card-1, .card-2, .card-3 che sovrascrivevano le foto vere */
 
 .discover-card-content {
     position: absolute;

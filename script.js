@@ -11,6 +11,8 @@
         return;
     }
 
+    // Aggiungi classe per nascondere i contenuti e farli slidare su dopo
+    document.body.classList.add('intro-active');
     document.body.classList.add('no-scroll');
 
     const w1 = document.getElementById('intro-w1');
@@ -28,17 +30,23 @@
         if (logo) logo.classList.add('show');
     }, 1400);
 
-    // Step 3: Fai scorrere l'INTERO overlay verso l'alto per svelare la Home sotto
+    // Step 3: Fai sfumare il testo intro, e togli la classe intro-active 
+    //         così che la Home originale "salga dal basso"
     setTimeout(() => {
-        overlay.classList.add('slide-up');
+        if (w1) w1.style.opacity = '0';
+        if (w2) w2.style.opacity = '0';
+        if (logo) logo.style.opacity = '0';
+
+        document.body.classList.remove('intro-active');
         document.body.classList.remove('no-scroll');
         sessionStorage.setItem('sb_intro_seen', '1');
     }, 3200);
 
-    // Step 4: Rimuovi l'overlay dal DOM una volta finita l'animazione di scorrimento (1.2s delay CSS)
+    // Step 4: Usa opacità per dissolvere l'overlay trasparente (sicurezza aggiuntiva) e rimuovilo
     setTimeout(() => {
-        overlay.remove();
-    }, 4500);
+        overlay.style.opacity = '0';
+        setTimeout(() => overlay.remove(), 1000);
+    }, 3800);
 })();
 
 document.addEventListener('DOMContentLoaded', () => {
