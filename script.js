@@ -5,12 +5,15 @@
     const overlay = document.getElementById('intro-overlay');
     if (!overlay) return;
 
-    // Se l'utente ha già visto l'intro in questa sessione, rimuovi subito
+    // Se l'utente ha già visto l'intro in questa sessione, non farla partire e mostra la home
     if (sessionStorage.getItem('sb_intro_seen')) {
         overlay.remove();
-        document.body.classList.remove('no-scroll');
         return;
     }
+
+    // Aggiungo una classe "intro-active" per nascondere i contenuti sottostanti (header, testi, bottoni)
+    document.body.classList.add('intro-active');
+    document.body.classList.add('no-scroll');
 
     const w1 = document.getElementById('intro-w1');
     const w2 = document.getElementById('intro-w2');
@@ -20,23 +23,32 @@
     setTimeout(() => {
         if (w1) w1.classList.add('show');
         if (w2) w2.classList.add('show');
-    }, 300);
+    }, 400);
 
-    // Step 2: Mostra il Logo che sale dal basso
+    // Step 2: Mostra il Logo che sale dal basso e si ferma più grande
     setTimeout(() => {
         if (logo) logo.classList.add('show');
-    }, 1200);
+    }, 1400);
 
-    // Step 3: L'intero overlay scorre verso l'alto
+    // Step 3: Fai scorrere WELCOME TO verso l'alto (scomparsa), e rimpicciolisci il logo portandolo in alto
     setTimeout(() => {
-        overlay.classList.add('slide-up');
+        if (w1) w1.style.opacity = '0';
+        if (w2) w2.style.opacity = '0';
+        if (w1) w1.style.transform = 'translateY(-50px)';
+        if (w2) w2.style.transform = 'translateY(-50px)';
+
+        if (logo) logo.classList.add('slide-home'); // Muove il logo grande verso l'alto
+
+        // Rivela il resto della pagina sotto (l'overlay trasparente rimane su fino alla fine, non nasconde nulla)
+        document.body.classList.remove('intro-active');
         document.body.classList.remove('no-scroll');
         sessionStorage.setItem('sb_intro_seen', '1');
-    }, 2800);
+    }, 3200);
 
-    // Step 4: Rimuovi l'overlay dal DOM
+    // Step 4: Fondi l'overlay rimosso per transizione pulita con la Home reale (che intanto è apparsa sotto in fade-in)
     setTimeout(() => {
-        overlay.remove();
+        overlay.style.opacity = '0';
+        setTimeout(() => overlay.remove(), 600);
     }, 4000);
 })();
 

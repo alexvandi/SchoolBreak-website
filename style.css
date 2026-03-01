@@ -48,10 +48,23 @@ body.no-scroll {
 }
 
 /* =========================================
-   INTRO OVERLAY (fullscreen centrato)
+   INTRO OVERLAY HYBRID (SFONDO TRASPARENTE)
    ========================================= */
 body.no-scroll {
     overflow: hidden;
+}
+
+/* Nascondiamo tutto il contenuto della hero fintanto che c'è l'intro. 
+   L'utente vedrà lo sfondo in movimento nudo, e sopra le scritte animate. */
+body.intro-active .hero-content,
+body.intro-active .cta-container,
+body.intro-active .main-header,
+body.intro-active .discover-section,
+body.intro-active .gallery-section,
+body.intro-active .main-footer {
+    opacity: 0 !important;
+    pointer-events: none;
+    transition: opacity 1s ease 0.5s;
 }
 
 .intro-overlay {
@@ -103,16 +116,22 @@ body.no-scroll {
 }
 
 .intro-logo {
-    width: 180px;
+    width: 250px;
     height: auto;
     opacity: 0;
     transform: translateY(60px);
-    transition: opacity 0.8s ease, transform 0.8s ease;
+    transition: opacity 0.8s ease, transform 0.8s ease, margin-bottom 0.8s ease;
 }
 
 .intro-logo.show {
     opacity: 1;
     transform: translateY(0);
+}
+
+.intro-logo.slide-home {
+    transform: translateY(-30vh) scale(0.6);
+    /* Sposta e riduce il logo alla dimensione e posizione della Home */
+    margin-bottom: -150px;
 }
 
 @media (min-width: 768px) {
@@ -1140,8 +1159,9 @@ html {
     left: 0;
     right: 0;
     bottom: 0;
-    background-size: contain;
-    background-position: center;
+    background-size: cover;
+    background-position: top center;
+    /* Centrato e in alto, per non tagliare le teste nelle foto */
     background-repeat: no-repeat;
     background-color: #111;
     transition: transform 0.8s ease;
