@@ -117,3 +117,143 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 });
+
+/* =========================================
+   SUPABASE - EVENTI LOGIC
+   ========================================= */
+const SUPABASE_URL = 'https://bohsivvtuqcoelopzkth.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJvaHNpdnZ0dXFjb2Vsb3B6a3RoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzExODIwODksImV4cCI6MjA4Njc1ODA4OX0.QTQt4y5-aHcLsWWQIv3YG6MY8zHx_j7XrtQK0dFh_qs';
+
+// Inizializza client solo se present nell'HTML (evita errori se caricato altrove ma male non fa)
+let supabase;
+if (typeof supabase !== 'undefined') {
+    window.supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    // 1. Logica per mostrare gli eventi in eventi.html
+    const eventsContainer = document.getElementById('events-container');
+    if (eventsContainer && window.supabaseClient) {
+        fetchEvents();
+    }
+
+    async function fetchEvents() {
+        const { data: events, error } = await window.supabaseClient
+            .from('events')
+            .select('*')
+            .order('event_date', { ascending: true }); // Mostra i prossimi per primi
+
+        if (error) {
+            console.error('Errore nel fetch eventi:', error);
+            eventsContainer.innerHTML = '<p style="color:red;text-align:center;">Errore durante il caricamento degli eventi.</p>';
+            return;
+        }
+
+        if (!events || events.length === 0) {
+            eventsContainer.innerHTML = '<p style="text-align:center;">Nessun evento disponibile al momento. Riprova più tardi!</p>';
+            return;
+        }
+
+        eventsContainer.innerHTML = ''; // Svuota lo skeleton di caricamento
+
+        events.forEach(event => {
+            const card = document.createElement('div');
+            card.className = 'event-card reveal';
+
+            // Layout fedele allo screenshot: Immagine enorme sopra, bottoni affiancati sotto
+            card.innerHTML = `
+                <img src="${event.poster_url || 'https://via.placeholder.com/800x1000/000000/ff0000?text=LOCANDINA+NON+DISPONIBILE'}" alt="Locandina ${event.title}" class="event-poster">
+                <div class="event-actions">
+                    <a href="${event.ticket_link || '#'}" class="btn-white" target="_blank" rel="noopener">ACQUISTA I<br>BIGLIETTI</a>
+                    <a href="mailto:schoolbreakevent@gmail.com?subject=Info Tavoli ${event.title}" class="btn-gray">PRENOTA UN<br>TAVOLO</a>
+                </div>
+            `;
+            eventsContainer.appendChild(card);
+        });
+
+        // Riabilita IntersectionObserver per i nuovi cards iniettati
+        const reveals = document.querySelectorAll('.reveal');
+        const revealOptions = { threshold: 0.15, rootMargin: "0px 0px -50px 0px" };
+        const revealOnScroll = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (!entry.isIntersecting) return;
+                entry.target.classList.add('active');
+                observer.unobserve(entry.target);
+            });
+        }, revealOptions);
+        reveals.forEach(el => revealOnScroll.observe(el));
+    }
+
+
+    // 2. Logica per caricare foto e salvare DB in admin.html
+    const adminForm = document.getElementById('admin-event-form');
+    if (adminForm && window.supabaseClient) {
+        adminForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const submitBtn = document.getElementById('submitBtn');
+            const msgBox = document.getElementById('admin-message');
+            submitBtn.textContent = 'CARICAMENTO IN CORSO...';
+            submitBtn.disabled = true;
+            msgBox.textContent = '';
+            msgBox.style.color = 'white';
+
+            try {
+                const name = document.getElementById('eventName').value;
+                const date = document.getElementById('eventDate').value;
+                const ticketUrl = document.getElementById('ticketLink').value;
+                const fileInput = document.getElementById('eventPoster');
+
+                let posterPublicUrl = '';
+
+                // Se ho un'immagine, caricamento su Storage
+                if (fileInput.files.length > 0) {
+                    const file = fileInput.files[0];
+                    const fileExt = file.name.split('.').pop();
+                    const fileName = `${Date.now()}_${Math.random().toString(36).substring(2, 9)}.${fileExt}`;
+                    const filePath = `${fileName}`;
+
+                    // Upload nel bucket "event-posters"
+                    const { data: uploadData, error: uploadError } = await window.supabaseClient
+                        .storage
+                        .from('event-posters')
+                        .upload(filePath, file);
+
+                    if (uploadError) {
+                        throw new Error('Errore durante l\'upload dell\'immagine: ' + uploadError.message);
+                    }
+
+                    // Prendi URL pubblico
+                    const { data: publicUrlData } = window.supabaseClient
+                        .storage
+                        .from('event-posters')
+                        .getPublicUrl(filePath);
+
+                    posterPublicUrl = publicUrlData.publicUrl;
+                }
+
+                // Inserimento a DB
+                const { data: insertData, error: insertError } = await window.supabaseClient
+                    .from('events')
+                    .insert([
+                        { title: name, event_date: date, ticket_link: ticketUrl, poster_url: posterPublicUrl }
+                    ]);
+
+                if (insertError) {
+                    throw new Error('Errore nell\'inserimento a database: ' + insertError.message);
+                }
+
+                msgBox.style.color = 'green';
+                msgBox.textContent = 'Evento Caricato con Successo!';
+                adminForm.reset();
+
+            } catch (err) {
+                console.error(err);
+                msgBox.style.color = 'red';
+                msgBox.textContent = err.message || 'Si è verificato un errore.';
+            } finally {
+                submitBtn.textContent = 'AGGIUNGI EVENTO';
+                submitBtn.disabled = false;
+            }
+        });
+    }
+});

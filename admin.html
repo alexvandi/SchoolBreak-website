@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Admin - Gestione Eventi | Schoolbreak Rimini</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Supabase SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="script.js" defer></script>
+</head>
+
+<body style="background-color: var(--bg-dark); color: var(--primary-color);">
+    <div class="admin-container" style="max-width: 600px; margin: 40px auto; padding: 20px;">
+        <h1 style="text-align:center; margin-bottom: 2rem;">Aggiungi Nuovo Evento</h1>
+        <form id="admin-event-form" class="admin-form">
+            <div class="form-group">
+                <label for="eventName">Nome Evento</label>
+                <input type="text" id="eventName" required placeholder="Es. Cento Giorni">
+            </div>
+
+            <div class="form-group">
+                <label for="eventDate">Data Evento</label>
+                <input type="date" id="eventDate" required>
+            </div>
+
+            <div class="form-group">
+                <label for="eventPoster">Locandina (Immagine)</label>
+                <input type="file" id="eventPoster" accept="image/*" required>
+            </div>
+
+            <div class="form-group">
+                <label for="ticketLink">Link Acquisto Biglietti</label>
+                <input type="url" id="ticketLink" required placeholder="https://ticketsms.it/...">
+            </div>
+
+            <button type="submit" class="btn btn-red btn-block" id="submitBtn">AGGIUNGI EVENTO</button>
+        </form>
+        <div id="admin-message" style="margin-top: 20px; text-align: center; font-weight: bold;"></div>
+
+        <div style="text-align: center; margin-top: 40px;">
+            <a href="index.html" style="color: #fff; text-decoration: underline;">Torna alla Home</a>
+        </div>
+    </div>
+</body>
+
+</html>
