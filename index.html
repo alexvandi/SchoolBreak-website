@@ -25,15 +25,7 @@
     <link rel="stylesheet" href="style.css">
 </head>
 
-<body class="no-scroll">
-
-    <!-- WELCOME SPLASH SCREEN (ispirato a unvrs.com) -->
-    <div id="splash-screen" class="splash-screen" aria-hidden="true">
-        <div class="splash-content">
-            <span class="splash-line splash-line-1">WELCOME TO</span>
-            <span class="splash-line splash-line-2">SCHOOLBREAK</span>
-        </div>
-    </div>
+<body class="no-scroll intro-animating">
 
     <!-- Sfondo principale -->
     <div class="bg-image"></div>
@@ -59,7 +51,10 @@
     <!-- Contenuto principale della Home -->
     <main class="hero-section">
         <div class="hero-content">
-            <img src="Schoolbreak logo.PNG" alt="Logo ottagonale Schoolbreak" class="hero-logo-img tilt-element">
+            <div id="intro-logo-wrapper" class="intro-scale">
+                <h2 id="welcome-text" class="welcome-text">WELCOME TO</h2>
+                <img src="Schoolbreak logo.PNG" alt="Logo ottagonale Schoolbreak" class="hero-logo-img tilt-element">
+            </div>
             <p class="tagline">L'evento ufficiale delle scuole di Rimini</p>
         </div>
 

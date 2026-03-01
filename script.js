@@ -1,33 +1,32 @@
 /* =========================================
-   SPLASH SCREEN CONTROLLER (solo Home)
+   INTRO ANIMATION CONTROLLER (solo Home)
    ========================================= */
 (function () {
-    const splash = document.getElementById('splash-screen');
-    if (!splash) return; // Non fare nulla se lo splash non è presente (altre pagine)
+    const isIntro = document.body.classList.contains('intro-animating');
+    if (!isIntro) return;
 
-    const line1 = splash.querySelector('.splash-line-1');
-    const line2 = splash.querySelector('.splash-line-2');
+    const introWrapper = document.getElementById('intro-logo-wrapper');
+    const welcomeText = document.getElementById('welcome-text');
 
-    // Step 1: Dopo 300ms mostra "WELCOME TO"
+    // Step 1: Mostra "WELCOME TO"
     setTimeout(() => {
-        if (line1) line1.classList.add('visible');
+        if (welcomeText) welcomeText.classList.add('show');
     }, 300);
 
-    // Step 2: Dopo 800ms mostra "SCHOOLBREAK"
+    // Step 2: Mostra il Logo ingrandito
     setTimeout(() => {
-        if (line2) line2.classList.add('visible');
-    }, 800);
+        if (introWrapper) introWrapper.classList.add('show');
+    }, 1000);
 
-    // Step 3: Dopo 2.8s fai scorrere lo splash verso l'alto
+    // Step 3: Rimuovi lo stato "intro-animating" per far scorrere tutto al suo posto
     setTimeout(() => {
-        splash.classList.add('exit');
+        if (welcomeText) welcomeText.style.opacity = '0'; // dissolve welcome text
+        document.body.classList.remove('intro-animating');
         document.body.classList.remove('no-scroll');
+        if (introWrapper) {
+            introWrapper.classList.remove('intro-scale', 'show');
+        }
     }, 2800);
-
-    // Step 4: Dopo che l'animazione finisce, rimuovi lo splash dal DOM
-    setTimeout(() => {
-        splash.remove();
-    }, 3800);
 })();
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -195,7 +194,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         events.forEach(event => {
             const card = document.createElement('div');
-            card.className = 'event-card reveal';
+            card.className = 'event-card';
 
             // Layout fedele allo screenshot: Immagine enorme sopra, bottoni affiancati sotto
             card.innerHTML = `
