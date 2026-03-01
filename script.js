@@ -124,10 +124,15 @@ document.addEventListener('DOMContentLoaded', () => {
 const SUPABASE_URL = 'https://bohsivvtuqcoelopzkth.supabase.co';
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJvaHNpdnZ0dXFjb2Vsb3B6a3RoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzExODIwODksImV4cCI6MjA4Njc1ODA4OX0.QTQt4y5-aHcLsWWQIv3YG6MY8zHx_j7XrtQK0dFh_qs';
 
-// Inizializza client solo se present nell'HTML (evita errori se caricato altrove ma male non fa)
-let supabase;
-if (typeof supabase !== 'undefined') {
-    window.supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+// Inizializza client Supabase solo se l'SDK è stato caricato via CDN
+// IMPORTANTE: NON usare 'let supabase' qui perché oscura l'oggetto globale del CDN!
+try {
+    if (window.supabase && window.supabase.createClient) {
+        window.supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+        console.log('Supabase client inizializzato con successo.');
+    }
+} catch (e) {
+    console.warn('Supabase SDK non disponibile in questa pagina.', e);
 }
 
 document.addEventListener('DOMContentLoaded', () => {

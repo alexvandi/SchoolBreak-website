@@ -908,10 +908,11 @@ html {
     background: #111;
 }
 
-.btn-red {
-    background: var(--primary-color);
-    color: white;
-    border: none;
+.btn-red,
+.btn.btn-red {
+    background: #ff0000;
+    color: #ffffff;
+    border: 2px solid #ff0000;
     margin-top: 10px;
     padding: 15px;
     border-radius: 6px;
@@ -919,8 +920,11 @@ html {
     cursor: pointer;
 }
 
-.btn-red:hover {
+.btn-red:hover,
+.btn.btn-red:hover {
     background: #cc0000;
+    border-color: #cc0000;
+    color: #ffffff;
 }
 
 /* =========================================
