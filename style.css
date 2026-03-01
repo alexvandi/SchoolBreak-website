@@ -143,10 +143,11 @@ body.no-scroll {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: center;
+    /* Center content vertically before adjusting margins */
     align-items: center;
-    padding: 100px 20px 40px;
-    /* Ridotto per spostare in alto gli elementi */
+    padding: 0 20px 40px;
+    /* Rimossi i padding massivi sopra per accentrare verticalmente a piacimento */
 }
 
 .hero-content {
@@ -154,8 +155,10 @@ body.no-scroll {
     flex-direction: column;
     align-items: center;
     text-align: center;
-    margin-top: auto;
-    margin-bottom: auto;
+    margin-top: -15vh;
+    /* Sposta il logo e il testo sensibilmente più in alto (stile Peter Pan) */
+    margin-bottom: 5vh;
+    /* Spazio tra logo e bottone */
     width: 100%;
 }
 
@@ -190,7 +193,8 @@ body.no-scroll {
     width: 100%;
     display: flex;
     justify-content: center;
-    margin-bottom: 50px;
+    margin-bottom: -15vh;
+    /* Sposta il bottone sensibilmente più in basso rispetto al centro */
     opacity: 0;
     animation: heroEntrance 1s cubic-bezier(0.165, 0.84, 0.44, 1) 0.9s forwards;
 }
@@ -740,7 +744,7 @@ html {
     }
 
     .hero-section {
-        padding: 120px 20px 40px;
+        padding: 0 20px 40px;
         /* Ripristino top padding hero per desktop */
     }
 
