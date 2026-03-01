@@ -6,27 +6,35 @@
     if (!isIntro) return;
 
     const introWrapper = document.getElementById('intro-logo-wrapper');
-    const welcomeText = document.getElementById('welcome-text');
+    const w1 = document.getElementById('welcome-word1');
+    const w2 = document.getElementById('welcome-word2');
 
-    // Step 1: Mostra "WELCOME TO"
+    // Step 1: Mostra "WELCOME"
     setTimeout(() => {
-        if (welcomeText) welcomeText.classList.add('show');
-    }, 300);
+        if (w1) w1.classList.add('show');
+    }, 200);
 
-    // Step 2: Mostra il Logo ingrandito
+    // Step 2: Mostra "TO"
+    setTimeout(() => {
+        if (w2) w2.classList.add('show');
+    }, 800);
+
+    // Step 3: Mostra il Logo che sale dal basso
     setTimeout(() => {
         if (introWrapper) introWrapper.classList.add('show');
-    }, 1000);
+    }, 1400);
 
-    // Step 3: Rimuovi lo stato "intro-animating" per far scorrere tutto al suo posto
+    // Step 4: Rimuovi lo stato "intro-animating" per far scorrere tutto al suo posto
     setTimeout(() => {
-        if (welcomeText) welcomeText.style.opacity = '0'; // dissolve welcome text
+        const txtContainer = document.querySelector('.welcome-text-container');
+        if (txtContainer) txtContainer.style.opacity = '0'; // dissolve "Welcome To" text
+
         document.body.classList.remove('intro-animating');
         document.body.classList.remove('no-scroll');
         if (introWrapper) {
-            introWrapper.classList.remove('intro-scale', 'show');
+            introWrapper.classList.remove('show');
         }
-    }, 2800);
+    }, 3200);
 })();
 
 document.addEventListener('DOMContentLoaded', () => {
