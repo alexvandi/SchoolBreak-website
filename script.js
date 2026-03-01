@@ -1,3 +1,35 @@
+/* =========================================
+   SPLASH SCREEN CONTROLLER (solo Home)
+   ========================================= */
+(function () {
+    const splash = document.getElementById('splash-screen');
+    if (!splash) return; // Non fare nulla se lo splash non è presente (altre pagine)
+
+    const line1 = splash.querySelector('.splash-line-1');
+    const line2 = splash.querySelector('.splash-line-2');
+
+    // Step 1: Dopo 300ms mostra "WELCOME TO"
+    setTimeout(() => {
+        if (line1) line1.classList.add('visible');
+    }, 300);
+
+    // Step 2: Dopo 800ms mostra "SCHOOLBREAK"
+    setTimeout(() => {
+        if (line2) line2.classList.add('visible');
+    }, 800);
+
+    // Step 3: Dopo 2.8s fai scorrere lo splash verso l'alto
+    setTimeout(() => {
+        splash.classList.add('exit');
+        document.body.classList.remove('no-scroll');
+    }, 2800);
+
+    // Step 4: Dopo che l'animazione finisce, rimuovi lo splash dal DOM
+    setTimeout(() => {
+        splash.remove();
+    }, 3800);
+})();
+
 document.addEventListener('DOMContentLoaded', () => {
     const menuOpenBtn = document.getElementById('menu-open-btn');
     const menuCloseBtn = document.getElementById('menu-close-btn');

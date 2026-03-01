@@ -48,6 +48,73 @@ body.no-scroll {
 }
 
 /* =========================================
+   SPLASH SCREEN (intro UNVRS-style)
+   ========================================= */
+.splash-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: #000;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.9s cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+.splash-screen.exit {
+    transform: translateY(-100%);
+}
+
+.splash-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+}
+
+.splash-line {
+    font-family: 'Playfair Display', serif;
+    color: #ffffff;
+    display: block;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.splash-line.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.splash-line-1 {
+    font-size: 1rem;
+    font-weight: 400;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+}
+
+.splash-line-2 {
+    font-size: 2.8rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    font-style: italic;
+}
+
+@media (min-width: 768px) {
+    .splash-line-1 {
+        font-size: 1.3rem;
+    }
+
+    .splash-line-2 {
+        font-size: 4.5rem;
+    }
+}
+
+/* =========================================
    Background Images & Overlays
    ========================================= */
 .bg-image {
@@ -111,8 +178,8 @@ body.no-scroll {
 }
 
 .header-img {
-    height: 12px;
-    /* Ulteriormente rimpicciolita su mobile */
+    height: 25px;
+    /* Stessa altezza visiva del menu hamburger */
     width: auto;
 }
 
