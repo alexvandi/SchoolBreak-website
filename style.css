@@ -60,13 +60,12 @@ body.no-scroll {
     left: 0;
     width: 100%;
     height: 100vh;
-    /* Eliminato completamente lo sfondo nero, ora usa lo sfondo della Home (che è già scuro) */
     background: transparent;
     z-index: 9999;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: transform 1s cubic-bezier(0.76, 0, 0.24, 1), opacity 0.6s ease;
+    transition: transform 1.2s cubic-bezier(0.76, 0, 0.24, 1);
 }
 
 .intro-overlay.slide-up {
@@ -77,19 +76,25 @@ body.no-scroll {
     display: flex;
     flex-direction: column;
     align-items: center;
+    gap: 20px;
+}
+
+.intro-text-line {
+    display: flex;
     gap: 12px;
 }
 
 .intro-word {
     font-family: 'Montserrat', sans-serif;
     font-weight: 900;
-    font-size: 2.5rem;
+    font-size: 2rem;
     letter-spacing: 0.15em;
     text-transform: uppercase;
     color: #ffffff;
     opacity: 0;
-    transform: translateY(30px);
+    transform: translateY(25px);
     transition: opacity 0.7s ease, transform 0.7s ease;
+    text-shadow: 0 2px 20px rgba(0, 0, 0, 0.6);
 }
 
 .intro-word.show {
@@ -98,10 +103,10 @@ body.no-scroll {
 }
 
 .intro-logo {
-    width: 140px;
+    width: 180px;
     height: auto;
     opacity: 0;
-    transform: translateY(50px);
+    transform: translateY(60px);
     transition: opacity 0.8s ease, transform 0.8s ease;
 }
 
@@ -112,54 +117,52 @@ body.no-scroll {
 
 @media (min-width: 768px) {
     .intro-word {
-        font-size: 4rem;
+        font-size: 3.5rem;
     }
 
     .intro-logo {
-        width: 200px;
+        width: 250px;
     }
 }
 
 /* =========================================
-   GALLERY (Grid Style come richiesto)
+   GALLERY (foto una sotto l'altra)
    ========================================= */
 .gallery-section {
     padding: 40px 0 80px;
+    background: var(--bg-dark);
 }
 
 .gallery-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    /* 2 colonne su mobile */
+    display: flex;
+    flex-direction: column;
     gap: 16px;
     padding: 20px 0;
 }
 
-.gallery-item {
+.gallery-slide {
     border-radius: 14px;
     overflow: hidden;
-    position: relative;
-}
-
-.gallery-item img {
+    max-width: 600px;
+    margin: 0 auto;
     width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-    aspect-ratio: 1/1;
-    /* quadrate o simili */
-    transition: transform 0.4s ease;
 }
 
-.gallery-item:hover img {
-    transform: scale(1.05);
+.gallery-slide img {
+    width: 100%;
+    height: auto;
+    display: block;
 }
 
 @media (min-width: 768px) {
     .gallery-grid {
+        display: grid;
         grid-template-columns: repeat(3, 1fr);
-        /* 3 colonne su PC */
-        gap: 24px;
+        gap: 20px;
+    }
+
+    .gallery-slide {
+        max-width: none;
     }
 }
 
@@ -1122,7 +1125,7 @@ html {
 
 .discover-card {
     position: relative;
-    height: 400px;
+    aspect-ratio: 1 / 1;
     border-radius: 12px;
     overflow: hidden;
     display: block;
@@ -1137,10 +1140,10 @@ html {
     left: 0;
     right: 0;
     bottom: 0;
-    background-size: cover;
-    /* Cover è l'unico modo per non avere spazi neri sgradevoli - per non farla troppo zoomata, center top è l'ideale */
-    background-position: center top;
+    background-size: contain;
+    background-position: center;
     background-repeat: no-repeat;
+    background-color: #111;
     transition: transform 0.8s ease;
     z-index: 1;
 }

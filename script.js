@@ -1,30 +1,28 @@
 /* =========================================
-   INTRO OVERLAY CONTROLLER (solo Home - eseguito 1 volta)
+   INTRO OVERLAY CONTROLLER (solo Home, solo prima visita)
    ========================================= */
 (function () {
     const overlay = document.getElementById('intro-overlay');
     if (!overlay) return;
 
-    // Controllo se l'animazione è già stata vista in questa sessione (o in generale)
-    if (sessionStorage.getItem('introPlayed')) {
-        // Se già vista, rimuovi subito l'overlay e riabilita lo scroll
+    // Se l'utente ha già visto l'intro in questa sessione, rimuovi subito
+    if (sessionStorage.getItem('sb_intro_seen')) {
         overlay.remove();
         document.body.classList.remove('no-scroll');
         return;
     }
 
-    // Segna l'animazione come vista per il futuro
-    sessionStorage.setItem('introPlayed', 'true');
-
-    const wLine = document.getElementById('intro-w1');
+    const w1 = document.getElementById('intro-w1');
+    const w2 = document.getElementById('intro-w2');
     const logo = document.getElementById('intro-logo');
 
-    // Step 1: Mostra "WELCOME TO" su una riga
+    // Step 1: Mostra "WELCOME" e "TO" insieme sulla stessa riga
     setTimeout(() => {
-        if (wLine) wLine.classList.add('show');
+        if (w1) w1.classList.add('show');
+        if (w2) w2.classList.add('show');
     }, 300);
 
-    // Step 2: Mostra il Logo enorme sotto
+    // Step 2: Mostra il Logo che sale dal basso
     setTimeout(() => {
         if (logo) logo.classList.add('show');
     }, 1200);
@@ -33,6 +31,7 @@
     setTimeout(() => {
         overlay.classList.add('slide-up');
         document.body.classList.remove('no-scroll');
+        sessionStorage.setItem('sb_intro_seen', '1');
     }, 2800);
 
     // Step 4: Rimuovi l'overlay dal DOM
