@@ -1,39 +1,44 @@
 /* =========================================
-   INTRO OVERLAY CONTROLLER (solo Home)
+   INTRO OVERLAY CONTROLLER (solo Home - eseguito 1 volta)
    ========================================= */
 (function () {
     const overlay = document.getElementById('intro-overlay');
-    if (!overlay) return; // Non fare nulla se l'overlay non è presente (altre pagine)
+    if (!overlay) return;
 
-    const w1 = document.getElementById('intro-w1');
-    const w2 = document.getElementById('intro-w2');
+    // Controllo se l'animazione è già stata vista in questa sessione (o in generale)
+    if (sessionStorage.getItem('introPlayed')) {
+        // Se già vista, rimuovi subito l'overlay e riabilita lo scroll
+        overlay.remove();
+        document.body.classList.remove('no-scroll');
+        return;
+    }
+
+    // Segna l'animazione come vista per il futuro
+    sessionStorage.setItem('introPlayed', 'true');
+
+    const wLine = document.getElementById('intro-w1');
     const logo = document.getElementById('intro-logo');
 
-    // Step 1: Mostra "WELCOME" al centro
+    // Step 1: Mostra "WELCOME TO" su una riga
     setTimeout(() => {
-        if (w1) w1.classList.add('show');
+        if (wLine) wLine.classList.add('show');
     }, 300);
 
-    // Step 2: Mostra "TO"
-    setTimeout(() => {
-        if (w2) w2.classList.add('show');
-    }, 900);
-
-    // Step 3: Mostra il Logo che sale dal basso
+    // Step 2: Mostra il Logo enorme sotto
     setTimeout(() => {
         if (logo) logo.classList.add('show');
-    }, 1500);
+    }, 1200);
 
-    // Step 4: L'intero overlay scorre verso l'alto rivelando la Home sotto
+    // Step 3: L'intero overlay scorre verso l'alto
     setTimeout(() => {
         overlay.classList.add('slide-up');
         document.body.classList.remove('no-scroll');
-    }, 3000);
+    }, 2800);
 
-    // Step 5: Rimuovi l'overlay dal DOM dopo l'animazione
+    // Step 4: Rimuovi l'overlay dal DOM
     setTimeout(() => {
         overlay.remove();
-    }, 4200);
+    }, 4000);
 })();
 
 document.addEventListener('DOMContentLoaded', () => {
