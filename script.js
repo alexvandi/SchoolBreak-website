@@ -221,7 +221,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <img src="${event.poster_url || 'https://via.placeholder.com/800x1000/000000/ff0000?text=LOCANDINA+NON+DISPONIBILE'}" alt="Locandina ${event.title}" class="event-poster">
                 <div class="event-actions">
                     <a href="${event.ticket_link || '#'}" class="btn-white" target="_blank" rel="noopener">ACQUISTA I<br>BIGLIETTI</a>
-                    <a href="mailto:schoolbreakevent@gmail.com?subject=Info Tavoli ${event.title}" class="btn-gray">PRENOTA UN<br>TAVOLO</a>
+                    <a href="https://wa.me/393348384908?text=Ciao%2C%20Vorrei%20prenotare%20un%20tavolo." class="btn-gray" target="_blank" rel="noopener">PRENOTA UN<br>TAVOLO</a>
                 </div>
             `;
             eventsContainer.appendChild(card);

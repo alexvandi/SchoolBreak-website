@@ -1155,6 +1155,10 @@ html {
     .discover-grid {
         grid-template-columns: repeat(3, 1fr);
     }
+
+    .discover-card {
+        min-height: 450px;
+    }
 }
 
 .discover-card {
