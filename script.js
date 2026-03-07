@@ -194,9 +194,16 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     async function fetchEvents() {
+        const today = new Date().toISOString().split('T')[0];
+        // Cleanup automatico dal DB degli eventi passati (si eliminano da soli)
+        try {
+            await window.supabaseClient.from('events').delete().lt('event_date', today);
+        } catch (e) { console.error('Errore pulizia eventi vecchi', e); }
+
         const { data: events, error } = await window.supabaseClient
             .from('events')
             .select('*')
+            .gte('event_date', today)
             .order('event_date', { ascending: true }); // Mostra i prossimi per primi
 
         if (error) {

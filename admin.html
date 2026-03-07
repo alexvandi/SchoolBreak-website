@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="it">
 
 <head>
@@ -11,9 +11,15 @@
     <!-- Supabase SDK -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="script.js" defer></script>
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
 </head>
 
 <body style="background-color: var(--bg-dark); color: var(--primary-color);">
+    <script>
+        if (prompt("Inserisci password per accedere all'area admin:") !== "SK.2026!") {
+            window.location.href = "index.html";
+        }
+    </script>
     <div class="admin-container" style="max-width: 600px; margin: 40px auto; padding: 20px;">
         <h1 style="text-align:center; margin-bottom: 2rem;">Aggiungi Nuovo Evento</h1>
         <form id="admin-event-form" class="admin-form">
